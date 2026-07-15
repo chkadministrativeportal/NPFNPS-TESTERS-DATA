@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPFNPS Testers Registry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg border border-gray-100">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 tracking-wide uppercase">NPFNPS Testers Form</h2>
+            <p class="text-sm text-gray-500 mt-1">Pakisagutan nang tama ang mga sumusunod na impormasyon.</p>
+        </div>
+        
+        <form id="testerForm" class="space-y-5">
+            <!-- Name -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Full Name (Format: SURNAME, FIRST NAME M.I.)</label>
+                <input type="text" id="testerName" placeholder="e.g. DELA CRUZ, JUAN A." required 
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 uppercase">
+            </div>
+
+            <!-- Group (Base sa Sample Image) -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Group</label>
+                <select id="testerGroup" required 
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                    <option value="" disabled selected>Pumili ng Group...</option>
+                    <option value="LUZON">LUZON</option>
+                    <option value="NCR">NCR</option>
+                    <option value="ILO-ILO">ILO-ILO</option>
+                    <option value="MINDANAO">MINDANAO</option>
+                </select>
+            </div>
+
+            <!-- Address -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Complete Address</label>
+                <input type="text" id="testerAddress" placeholder="e.g. 27 Dela Paz St. Subay, Cardona, Rizal" required 
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+            </div>
+
+            <!-- Educational Attainment -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Educational Attainment</label>
+                <input type="text" id="testerEducation" placeholder="e.g. Bachelor of Secondary Education, Major in MAPEH" required 
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+            </div>
+
+            <!-- Birthdate -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Birthdate</label>
+                <input type="date" id="testerBirthdate" required 
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitBtn" 
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-4 rounded-lg font-semibold shadow-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                I-submit sa Masterlist
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // PALITAN ITO NG IYONG AKTUWAL NA APPS SCRIPT WEB APP URL MULA SA DEPLOYMENT
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwNQ3mcPqsT5AttCVIY2aoyOf28YeGjmAFW6bejT_lHLgIp4vWP52WsfRRjyj_nAkbkdw/exec';
+
+        document.getElementById('testerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitButton = document.getElementById('submitBtn');
+            submitButton.disabled = true;
+            submitButton.innerText = 'Ipinapadala sa Masterlist...';
+            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+
+            const formData = {
+                name: document.getElementById('testerName').value.toUpperCase(), // Gagawin nating uppercase para uniform
+                group: document.getElementById('testerGroup').value,
+                address: document.getElementById('testerAddress').value,
+                education: document.getElementById('testerEducation').value,
+                birthdate: document.getElementById('testerBirthdate').value
+            };
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                alert('Matagumpay na naitala ang iyong impormasyon sa masterlist!');
+                document.getElementById('testerForm').reset();
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('May naganap na error. Pakisubukang muli.');
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                submitButton.innerText = 'I-submit sa Masterlist';
+                submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            });
+        });
+    </script>
+</body>
+</html>
