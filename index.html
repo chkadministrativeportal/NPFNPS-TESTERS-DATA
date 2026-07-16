@@ -5,82 +5,240 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NPFNPS Testers Registry</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --maroon: #7B1113;
+            --maroon-dark: #5C0D0F;
+            --dilg-green: #046A38;
+            --ivory: #FAF6EF;
+            --ink: #2B2622;
+            --ink-soft: #6B645C;
+            --line: #E7DFD1;
+        }
+        body { font-family: 'Public Sans', sans-serif; background-color: var(--ivory); color: var(--ink); }
+        .font-display { font-family: 'Lora', serif; }
+
+        /* subtle paper texture via layered radial gradients */
+        .paper-bg {
+            background-color: var(--ivory);
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(123,17,19,0.035) 0, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(4,106,56,0.035) 0, transparent 40%);
+        }
+
+        .seal-ring {
+            box-shadow: 0 0 0 3px var(--ivory), 0 0 0 4px var(--maroon);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--maroon);
+            box-shadow: 0 0 0 3px rgba(123,17,19,0.12);
+        }
+
+        .privacy-card {
+            background: linear-gradient(180deg, #FFFDF9 0%, #FBF5EA 100%);
+            border: 1px solid var(--line);
+        }
+
+        input[type="checkbox"].consent-box {
+            accent-color: var(--maroon);
+        }
+
+        .btn-primary {
+            background-color: var(--maroon);
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--maroon-dark);
+        }
+        .btn-primary:disabled {
+            background-color: #C9BDB3;
+            cursor: not-allowed;
+        }
+
+        .eyebrow {
+            letter-spacing: 0.14em;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4">
+<body class="paper-bg min-h-screen flex items-center justify-center p-4 py-10">
 
-    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg border border-gray-100">
+    <div class="w-full max-w-lg">
+
+        <!-- Header block -->
         <div class="text-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 tracking-wide uppercase">NPFNPS Testers Form</h2>
-            <p class="text-sm text-gray-500 mt-1">Pakisagutan nang tama ang mga sumusunod na impormasyon.</p>
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full seal-ring bg-white mb-4">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L3 6v6c0 5.25 3.75 9.75 9 11 5.25-1.25 9-5.75 9-11V6l-9-4z" stroke="#7B1113" stroke-width="1.6" stroke-linejoin="round"/>
+                    <path d="M8.5 12l2.5 2.5 5-5" stroke="#046A38" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h2 class="font-display text-2xl font-semibold text-[var(--ink)]">NPFNPS Testers Form</h2>
+            <p class="text-sm text-[var(--ink-soft)] mt-1.5">Pakisagutan nang tama ang mga sumusunod na impormasyon.</p>
         </div>
-        
-        <form id="testerForm" class="space-y-5">
-            <!-- Name -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Full Name (Format: SURNAME, FIRST NAME M.I.)</label>
-                <input type="text" id="testerName" placeholder="e.g. DELA CRUZ, JUAN A." required 
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 uppercase">
-            </div>
 
-            <!-- Group (Base sa Sample Image) -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Group</label>
-                <select id="testerGroup" required 
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
-                    <option value="" disabled selected>Pumili ng Group...</option>
-                    <option value="LUZON">LUZON</option>
-                    <option value="NCR">NCR</option>
-                    <option value="ILO-ILO">ILO-ILO</option>
-                    <option value="MINDANAO">MINDANAO</option>
-                </select>
-            </div>
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-[var(--line)]">
+            <form id="testerForm" class="space-y-5">
+                <!-- Name -->
+                <div>
+                    <label class="block text-sm font-semibold text-[var(--ink)] mb-1.5">Full Name (Format: SURNAME, FIRST NAME M.I.)</label>
+                    <input type="text" id="testerName" placeholder="e.g. DELA CRUZ, JUAN A." required
+                        class="w-full px-4 py-2.5 border border-[var(--line)] rounded-lg transition duration-150 uppercase">
+                </div>
 
-            <!-- Address -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Complete Address</label>
-                <input type="text" id="testerAddress" placeholder="e.g. 27 Dela Paz St. Subay, Cardona, Rizal" required 
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
-            </div>
+                <!-- Designation -->
+                <div>
+                    <label class="block text-sm font-semibold text-[var(--ink)] mb-1.5">Designation</label>
+                    <select id="testerDesignation" required
+                        class="w-full px-4 py-2.5 border border-[var(--line)] rounded-lg bg-white transition duration-150">
+                        <option value="" disabled selected>Pumili ng Designation...</option>
+                        <option value="Area Leader">Area Leader</option>
+                        <option value="Exercise Testing Personnel">Exercise Testing Personnel</option>
+                        <option value="Assistant Testing Personnel">Assistant Testing Personnel</option>
+                        <option value="Others">Others (specify)</option>
+                    </select>
+                    <input type="text" id="testerDesignationOther" placeholder="Specify designation"
+                        class="hidden w-full px-4 py-2.5 border border-[var(--line)] rounded-lg transition duration-150 mt-2">
+                </div>
 
-            <!-- Educational Attainment -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Educational Attainment</label>
-                <input type="text" id="testerEducation" placeholder="e.g. Bachelor of Secondary Education, Major in MAPEH" required 
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
-            </div>
+                <!-- Group -->
+                <div>
+                    <label class="block text-sm font-semibold text-[var(--ink)] mb-1.5">Group</label>
+                    <select id="testerGroup" required
+                        class="w-full px-4 py-2.5 border border-[var(--line)] rounded-lg bg-white transition duration-150">
+                        <option value="" disabled selected>Pumili ng Group...</option>
+                        <option value="LUZON">LUZON</option>
+                        <option value="NCR">NCR</option>
+                        <option value="ILO-ILO">ILO-ILO</option>
+                        <option value="MINDANAO">MINDANAO</option>
+                    </select>
+                </div>
 
-            <!-- Birthdate -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Birthdate</label>
-                <input type="date" id="testerBirthdate" required 
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
-            </div>
+                <!-- Address -->
+                <div>
+                    <label class="block text-sm font-semibold text-[var(--ink)] mb-1.5">Complete Address</label>
+                    <input type="text" id="testerAddress" placeholder="e.g. 27 Dela Paz St. Subay, Cardona, Rizal" required
+                        class="w-full px-4 py-2.5 border border-[var(--line)] rounded-lg transition duration-150">
+                </div>
 
-            <!-- Submit Button -->
-            <button type="submit" id="submitBtn" 
-                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-4 rounded-lg font-semibold shadow-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                I-submit sa Masterlist
-            </button>
-        </form>
+                <!-- Educational Attainment -->
+                <div>
+                    <label class="block text-sm font-semibold text-[var(--ink)] mb-1.5">Educational Attainment</label>
+                    <input type="text" id="testerEducation" placeholder="e.g. Bachelor of Secondary Education, Major in MAPEH" required
+                        class="w-full px-4 py-2.5 border border-[var(--line)] rounded-lg transition duration-150">
+                </div>
+
+                <!-- University/College Attended -->
+                <div>
+                    <label class="block text-sm font-semibold text-[var(--ink)] mb-1.5">University/College Attended</label>
+                    <input type="text" id="testerUniversity" placeholder="e.g. University of the Philippines Diliman" required
+                        class="w-full px-4 py-2.5 border border-[var(--line)] rounded-lg transition duration-150">
+                </div>
+
+                <!-- Birthdate -->
+                <div>
+                    <label class="block text-sm font-semibold text-[var(--ink)] mb-1.5">Birthdate</label>
+                    <input type="date" id="testerBirthdate" required
+                        class="w-full px-4 py-2.5 border border-[var(--line)] rounded-lg transition duration-150">
+                </div>
+
+                <!-- Eligibility -->
+                <div>
+                    <label class="block text-sm font-semibold text-[var(--ink)] mb-1.5">Eligibility *</label>
+                    <input type="text" id="testerEligibility" placeholder="Input Eligibility" required
+                        class="w-full px-4 py-2.5 border border-[var(--line)] rounded-lg transition duration-150">
+                </div>
+
+                <!-- Eligibility Start Date -->
+                <div>
+                    <label class="block text-sm font-semibold text-[var(--ink)] mb-1.5">Eligibility Start Date *</label>
+                    <input type="date" id="testerEligStart" required
+                        class="w-full px-4 py-2.5 border border-[var(--line)] rounded-lg transition duration-150">
+                </div>
+
+
+
+                <!-- Data Privacy Notice -->
+                <div class="privacy-card rounded-xl p-4">
+                    <div class="flex items-start gap-2.5">
+                        <svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="10" width="16" height="10" rx="2" stroke="#7B1113" stroke-width="1.6"/>
+                            <path d="M8 10V7a4 4 0 018 0v3" stroke="#7B1113" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                        <div>
+                            <p class="text-sm font-semibold text-[var(--ink)]">Paalala sa Data Privacy</p>
+                            <p class="text-xs text-[var(--ink-soft)] mt-1 leading-relaxed">
+                                Ang mga impormasyong ipapasa sa form na ito ay kokolektahin at gagamitin lamang para sa layuning
+                                <span class="font-medium text-[var(--ink)]">Accounting Profile ng UP Diliman</span>.
+                                Hindi ito ibabahagi, ipagbibili, o idi-disclose sa sinumang ikatlong partido, alinsunod sa
+                                Republic Act No. 10173 (Data Privacy Act of 2012).
+                            </p>
+                        </div>
+                    </div>
+                    <label class="flex items-start gap-2.5 mt-3.5 pt-3.5 border-t border-[var(--line)] cursor-pointer">
+                        <input type="checkbox" id="consentCheck" required class="consent-box mt-0.5 w-4 h-4 rounded">
+                        <span class="text-xs text-[var(--ink)] leading-relaxed">
+                            Nabasa ko at sumasang-ayon ako sa paggamit ng aking datos ayon sa nakasaad sa itaas.
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitBtn" disabled
+                    class="btn-primary w-full text-white py-3 px-4 rounded-lg font-semibold shadow-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--maroon)]">
+                    I-submit sa Masterlist
+                </button>
+            </form>
+        </div>
+
     </div>
 
     <script>
-        // PALITAN ITO NG IYONG AKTUWAL NA APPS SCRIPT WEB APP URL MULA SA DEPLOYMENT
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwNQ3mcPqsT5AttCVIY2aoyOf28YeGjmAFW6bejT_lHLgIp4vWP52WsfRRjyj_nAkbkdw/exec';
+
+        const consentCheck = document.getElementById('consentCheck');
+        const submitBtn = document.getElementById('submitBtn');
+        consentCheck.addEventListener('change', () => {
+            submitBtn.disabled = !consentCheck.checked;
+        });
+
+        const designationSelect = document.getElementById('testerDesignation');
+        const designationOther = document.getElementById('testerDesignationOther');
+        designationSelect.addEventListener('change', () => {
+            if (designationSelect.value === 'Others') {
+                designationOther.classList.remove('hidden');
+                designationOther.required = true;
+            } else {
+                designationOther.classList.add('hidden');
+                designationOther.required = false;
+                designationOther.value = '';
+            }
+        });
 
         document.getElementById('testerForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
+            if (!consentCheck.checked) {
+                alert('Kailangan mong sang-ayunan muna ang Data Privacy Notice bago mag-submit.');
+                return;
+            }
+
             const submitButton = document.getElementById('submitBtn');
             submitButton.disabled = true;
             submitButton.innerText = 'Ipinapadala sa Masterlist...';
-            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
 
             const formData = {
-                name: document.getElementById('testerName').value.toUpperCase(), // Gagawin nating uppercase para uniform
+                name: document.getElementById('testerName').value.toUpperCase(),
+                designation: designationSelect.value === 'Others' ? designationOther.value : designationSelect.value,
                 group: document.getElementById('testerGroup').value,
                 address: document.getElementById('testerAddress').value,
                 education: document.getElementById('testerEducation').value,
+                university: document.getElementById('testerUniversity').value,
+                eligibility: document.getElementById('testerEligibility').value,
+                eligStart: document.getElementById('testerEligStart').value,
                 birthdate: document.getElementById('testerBirthdate').value
             };
 
@@ -99,6 +257,7 @@
                 if (result.status === 'success') {
                     alert('Matagumpay na naitala ang iyong impormasyon sa masterlist!');
                     document.getElementById('testerForm').reset();
+                    submitBtn.disabled = true;
                 } else {
                     alert('Error mula sa server: ' + result.message);
                 }
@@ -108,9 +267,8 @@
                 alert('May naganap na error: ' + error.message);
             })
             .finally(() => {
-                submitButton.disabled = false;
+                submitButton.disabled = !consentCheck.checked;
                 submitButton.innerText = 'I-submit sa Masterlist';
-                submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
             });
         });
     </script>
